@@ -1,24 +1,7 @@
 using System;
 
-namespace netCore_Raycasting
+namespace netCore_Raycasting.Modules.Geometry
 {
-
-    /// <summary>The Tuple of thow Vector2</summary>
-    public class TupleVector2
-    {
-        private Vector2 a;
-        private Vector2 b;
-
-        public Vector2 A { get => a; }
-        public Vector2 B { get => b; }
-
-        public TupleVector2 (Vector2 a, Vector2 b)
-        {
-            this.a = a;
-            this.b = b;
-        }
-    }
-
     /// <summary>
     /// The Vector2 class.
     /// The Geometry Vector of thow dimentions representation.
@@ -26,6 +9,10 @@ namespace netCore_Raycasting
     /// <remarks>This class can distance, vector distance and reorganize.</remarks>
     public class Vector2
     {
+        public enum Type
+        {
+            x, y
+        }
         private float x;
         private float y;
         public float X { get {return x; } }
@@ -53,6 +40,12 @@ namespace netCore_Raycasting
             return Math.Sqrt((distance.X * distance.X) + (distance.Y * distance.Y));
         }
 
+        public static double Distance (Vector2 vectorDistance)
+        {
+            return Math.Sqrt((vectorDistance.X * vectorDistance.X)
+                + (vectorDistance.Y * vectorDistance.Y));
+        }
+
         /// <returns>The vector distance of thow points.</returns>
         public static Vector2 VectorDistance (Vector2 a, Vector2 b)
         {
@@ -63,10 +56,10 @@ namespace netCore_Raycasting
         }
 
         /// <returns>the vectors organized incrementally</returns>
-        public static TupleVector2 Reorganize (Vector2 a, Vector2 b)
+        public static Vector2Tuple Reorganize (Vector2 a, Vector2 b)
         {
-            TupleVector2 va = new TupleVector2(a, b);
-            TupleVector2 vb = new TupleVector2(b, a);
+            Vector2Tuple va = new Vector2Tuple(a, b);
+            Vector2Tuple vb = new Vector2Tuple(b, a);
 
             if (Math.Abs(b.Y - a.Y) < Math.Abs(b.X - a.X))
             {
@@ -89,14 +82,19 @@ namespace netCore_Raycasting
         }
     }
 
-    public static class NumericExtensions
+    /// <summary>The Tuple of thow Vector2</summary>
+    public struct Vector2Tuple
     {
+        private Vector2 a;
+        private Vector2 b;
 
-        /// <summary>Convert to Radians.</summary>
-        /// <returns>The value in radians</returns>
-        public static double ToRadians(double val)
+        public Vector2 A { get => a; }
+        public Vector2 B { get => b; }
+
+        public Vector2Tuple (Vector2 a, Vector2 b)
         {
-            return (Math.PI / 180) * val;
+            this.a = a;
+            this.b = b;
         }
     }
 }
