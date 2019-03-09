@@ -45,7 +45,9 @@ namespace netCore_Raycasting.Modules.DDA_Algorithm
         public bool plot (int i, int j, int grayScale)
         {
             if (i >= this.i || j >= this.j || i < 0 || j < 0)
+            {
                 return false;
+            }
             this.frame[i, j] = grayScale;
             return true;
         }
@@ -54,7 +56,7 @@ namespace netCore_Raycasting.Modules.DDA_Algorithm
         {
             string filePath = @""+addr;
 
-            string text = "P2\n"+this.i+" "+this.j+"\n255\n";
+            string text = "P2\n"+this.j+" "+this.i+"\n255\n";
 
             for (int i = 0; i < this.i; i++)
             {

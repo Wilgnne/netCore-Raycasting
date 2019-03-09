@@ -71,14 +71,13 @@ namespace netCore_Raycasting.Modules.Geometry
             }
             else if (a.M != float.NaN && b.M != float.NaN && dm != 0 && dm != float.NaN)
             {
-                Console.WriteLine("Padronizado");
                 float x = (b.c - a.c) / dm;
                 float y = (a.m * x) + a.c;
 
                 return new Vector2(x, y);
             }
 
-            return null;
+            return new Vector2(float.PositiveInfinity, float.PositiveInfinity);
         }
     }
 }

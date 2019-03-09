@@ -8,8 +8,8 @@ namespace netCore_Raycasting.Modules.DDA_Algorithm
     {
         public static void plotPoint(Vector2 point, FrameBuffer frameBuffer, int grayScale)
         {
-            int i = (int)point.Y;
-            int j = (int)point.X;
+            int i = (int) Math.Floor(point.Y);
+            int j = (int) Math.Floor(point.X);
             frameBuffer.plot(i, j, grayScale);
         }
 
@@ -42,16 +42,16 @@ namespace netCore_Raycasting.Modules.DDA_Algorithm
 
         public static void ClockTest ()
         {
-            int w = 34;
-            int h = 34;
+            int w = 500;
+            int h = 500;
 
             FrameBuffer frameBuffer = new FrameBuffer(w, h, 0);
-            Vector2 a = new Vector2(15, 15);
+            Vector2 a = new Vector2(250, 250);
 
             double angle0 = 0;
             double angle1 = 30;
-            float raio0 = 10;
-            float raio1 = 12;
+            float raio0 = 125;
+            float raio1 = 75;
 
             while (true)
             {
@@ -71,7 +71,7 @@ namespace netCore_Raycasting.Modules.DDA_Algorithm
 
                 frameBuffer.Export("clock.pgm");
 
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                Thread.Sleep(TimeSpan.FromSeconds(0.5f));
             }
         }
     }

@@ -20,7 +20,7 @@ namespace netCore_Raycasting.Modules.RayCasting
 
         public Vector2 RayCasting (Player player, float angle)
         {
-            double radians = NumericExtensions.ToRadians((double)angle) + player.Rotation;
+            double radians = NumericExtensions.ToRadians((double)angle);
             float cos = (float) Math.Cos(radians) + player.Position.X;
             float sin = (float) Math.Sin(radians) + player.Position.Y;
 
@@ -28,7 +28,6 @@ namespace netCore_Raycasting.Modules.RayCasting
             Vector2 signalRay = Vector2.VectorDistance(player.Position, ray);
 
             Line playerLine = new Line(player.Position, ray);
-            Console.WriteLine(playerLine);
 
             List<Vector2> intersections = new List<Vector2>();
 
@@ -41,13 +40,7 @@ namespace netCore_Raycasting.Modules.RayCasting
 
                 Line lineMap = new Line(points.A, points.B);
 
-                Console.WriteLine("Reta entre "+points.A+" e "+points.B);
-                Console.WriteLine(lineMap);
-
                 Vector2 intersect = Line.Intersection(playerLine, lineMap);
-
-                Console.WriteLine ("Interseção em");
-                Console.WriteLine(intersect);
 
                 Vector2 signalIntersect = Vector2.VectorDistance(player.Position, intersect);
 
@@ -60,15 +53,12 @@ namespace netCore_Raycasting.Modules.RayCasting
                 if (signalX && signalY && XinLimit && YinLimit)
                 {
                     intersections.Add(intersect);
-                    Console.WriteLine("Esta dentro dos limites");
 
                     if(finalPoint == null)
                         finalPoint = intersect;
                     else if (Vector2.Distance(intersect, player.Position) < Vector2.Distance(finalPoint, player.Position))
                         finalPoint = intersect;
                 }
-
-                Console.WriteLine("--------------------\n");
             }
 
             Console.WriteLine(finalPoint);
@@ -92,6 +82,25 @@ namespace netCore_Raycasting.Modules.RayCasting
 
                 LineGeneration.plotLine(a, b, frame, lineColor);
             }
+            frame.Export(adrr);
+        }
+
+        public void ViewRay (string adrr, Vector2 pos, Vector2 intersect, int baseColor, int lineColor, int PlayerColor)
+        {
+            FrameBuffer frame = new FrameBuffer((int)this.size.X + 1,
+                (int)this.size.Y + 1, baseColor);
+
+            foreach (intTuple item in this.edge)
+            {
+                Vector2 a = this.vertex[item.A];
+                Vector2 b = this.vertex[item.B];
+
+                LineGeneration.plotLine(a, b, frame, lineColor);
+            }
+
+            LineGeneration.plotLine(pos, intersect, frame, 255);
+            LineGeneration.plotPoint(pos, frame, PlayerColor);
+
             frame.Export(adrr);
         }
 
